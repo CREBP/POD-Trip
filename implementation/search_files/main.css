@@ -1,0 +1,179 @@
+/*!
+ * Start Bootstrap - Modern Business HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Global Styles */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    padding-top: 130px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    
+}
+.btn-primary{
+color: #fff;
+background-color: #BC2A2B;
+border-color: #BC2A2B;
+}
+
+a:link {
+
+color: #BC2A2B;
+
+}
+
+a:visited {
+
+color: #BC2A2B;
+
+}
+
+.btn-primary:hover{
+color: #fff;
+background-color: #7C0E14;
+border-color: #7C0E14;
+}
+
+
+.navbar {
+
+background-color: #ffffff;
+height: 90px;
+margin-bottom: 20px;
+}
+
+.navbar-inverse {
+
+border-bottom: solid 2px;
+border-color: #BC2A2B;
+
+}
+.partnerpic {
+float: right;
+margin-top: 20px;
+}
+
+
+.page-header{
+color: #BC2A2B;
+font-size: 30px;
+text-align: center;
+border:none;
+
+}
+
+
+.page-header2{
+color: #BC2A2B;
+font-size: 18px;
+text-align: left;
+border:none;
+margin: 0px;
+padding: 0px;
+
+}
+.img-hover:hover {
+    opacity: 0.8;
+}
+
+.trip{
+margin-top: 60px;
+}
+
+.searchline{
+margin-top: 20px;
+border-bottom: solid 1px #CCCCCC;
+}
+
+.result-area{
+
+width:80%;
+margin: 30px auto 0px auto;
+color: #999999; 
+
+}
+
+.results-header{
+
+font-size: 18px;
+margin-bottom: 25px;
+
+}
+.search-result{
+margin: 20px 0px 0px  0px;
+
+}
+.trippic{
+margin:auto;
+width:309px;
+}
+
+
+.footertext {
+  text-align: center;
+margin: auto;
+   }
+.triptext{
+text-align: center;
+margin: auto;
+color: #999999;
+}
+
+/*Search form */
+
+
+.searchbar{
+
+{
+
+
+.searchbar btn{
+background-color: #BC2A2B;
+}
+
+
+
+
+
+
+/* 404 Page Styles */
+
+.error-404 {
+    font-size: 100px;
+}
+
+
+
+/* Footer Styles */
+
+footer {
+    margin: 50px 0;
+  
+ 
+}
+
+
+
+/* Responsive Styles */
+
+@media(max-width:991px) {
+    .customer-img,
+    .img-related {
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width:767px) {
+    .img-portfolio {
+        margin-bottom: 15px;
+    }
+
+    header.carousel .carousel {
+        height: 70%;
+    }
+}
