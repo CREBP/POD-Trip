@@ -51,72 +51,127 @@
 
 	<!-- Page Content -->
 	<div class="container">
+		<!-- contents for initial loading -->
+		<div ng-show="!searched">
+			<!-- Page Heading/Breadcrumbs -->
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <h1 class="page-header"> Search the Evidence on Overdiagosis </h1>
+	                <div class="searchbar">
+				        <div class="row">
+				            <div class="col-md-3">
+				            </div>
+				            <form ng-submit="submit()">
+		            			<div class="col-md-6">
+			                	
+				                    <div class="control-group form-group">
+				                        <div class="controls">
+				                            <input type="text" class="form-control" id="search" placeholder="Enter search term" required="" data-validation-required-message="Please enter a search term.">
+											<p class="help-block"> </p>
+			                        	</div>
+			                    	</div>
+			                    
+			                    	<div id="success"></div>
+			                     
+								</div>
+								<div class="col-md-3">
+								<!-- For success/fail messages -->
+									<button type="submit" class="btn btn-primary">Search</button>
+								</div>
+							</form>
+		                </div>
+	        		</div>
+	        		<!-- /.row -->
+	    		</div>
+	        </div>
+	        <!-- /.row -->
+
+	        <!-- Content Row -->
+	        <div class="trip"></div>
+	        <div class="row">
+		        <div class="col-md-4">
+		        </div>
+	            <div class="col-md-4">
+	            	<div class="trippic"><a href="https://www.tripdatabase.com/" target="new"> <img src="./Preventing Overdiagnosis Search_files/trip_logo.png"></a></div>
+	            	<div class="triptext" <p="">Search supported by Trip, a tool for you to fine and use high-quality clinical research evidence.<p></p>  </div>
+	            </div>
+	            <div class="col-md-4">
+	        	</div>
+			</div>
+			<div class="trip"></div>
+	        <!-- /.row -->
+        </div>
+        <!-- contents for initial loading -->
+
 		<!-- Contact Form -->
 		<!-- In order to set the email address and subject line for the contact form go to the bin/contact_me.php file. -->
-		<form ng-submit="submit()" class="row">
-			<div class="col-md-4">
-				<h4 class="page-header2">Search the Evidence on Overdiagosis</h4>
-				Powered by <a href="https://www.tripdatabase.com/" target="new"> <img src="./search_files/trip_sm.png" width="35px"></a>
+		<!-- contents for searched -->
+		<div ng-show="searched">
+			<form ng-submit="submit()" class="row">
+				<div class="col-md-4">
+					<h4 class="page-header2">Search the Evidence on Overdiagosis</h4>
+					Powered by <a href="https://www.tripdatabase.com/" target="new"> <img src="./search_files/trip_sm.png" width="35px"></a>
+				</div>
+				<div class="col-md-6">
+					<div class="control-group form-group">
+						<div class="controls">
+							<input ng-model="query" autofocus type="search" class="form-control" id="search" placeholder="Enter search terms...">
+							<p class="help-block"></p>
+						</div>
+					</div>
+					
+					<div id="success"></div>
+				</div>
+				<div class="col-md-2">
+					<!-- For success/fail messages -->
+					<button type="submit" class="btn btn-primary">Search</button>
+				</div>
+			</form>
+			<!-- /.row -->
+
+			<!-- DEBUG BUTTONS - REMOVE OR COMMENT THIS OUT -->
+			<div class="well">
+				<a ng-click="debugLoading()" ng-class="loading && 'active'" class="btn btn-info">Simulate loading</a>
 			</div>
-			<div class="col-md-6">
-				<div class="control-group form-group">
-					<div class="controls">
-						<input ng-model="query" autofocus type="search" class="form-control" id="search" placeholder="Enter search terms...">
-						<p class="help-block"></p>
+
+			<!-- Content Row -->
+			
+			<div class="searchline"></div>
+
+			<div ng-show="loading" class="text-center" style="padding: 20px 20px 0 20px">
+				<h4>Loading search results...</h4>
+			</div>
+		
+			<div ng-show="!loading && searched" class="row">
+				<div class="col-lg-12">
+			
+				<div class="result-area">
+					<div class="results-header">
+						<span class="glyphicon glyphicon-search"></span>
+							{{result.total | number}} search results for "<em>{{query}}</em>"
+						</div>
+					</div>
+					<div ng-if="result.total > 0" ng-repeat="item in result.documents track by item.id" class="search-result">
+						<div class="pub-name">
+							 <a href="{{item.link}}">{{item.title}}</a>
+						</div>
+						<div class="pub-id">
+							Publication ID: {{item.id}}
+						</div>
+						<div class="pub">
+							Publication: {{item.publication}}
+						</div>
+						<div class="pub-date">
+							Publication Date: {{item.pubdate}}
+						</div>
 					</div>
 				</div>
-				
-				<div id="success"></div>
 			</div>
-			<div class="col-md-2">
-				<!-- For success/fail messages -->
-				<button type="submit" class="btn btn-primary">Search</button>
-			</div>
-		</form>
-		<!-- /.row -->
-
-		<!-- DEBUG BUTTONS - REMOVE OR COMMENT THIS OUT -->
-		<div class="well">
-			<a ng-click="debugLoading()" ng-class="loading && 'active'" class="btn btn-info">Simulate loading</a>
-		</div>
-
-		<!-- Content Row -->
-		
-		<div class="searchline"></div>
-
-		<div ng-show="loading" class="text-center" style="padding: 20px 20px 0 20px">
-			<h4>Loading search results...</h4>
-		</div>
-		
-		<div ng-show="!loading && searched" class="row">
-			<div class="col-lg-12">
-		
-			<div class="result-area">
-				<div class="results-header">
-					<span class="glyphicon glyphicon-search"></span>
-						{{result.total | number}} search results for "<em>{{query}}</em>"
-					</div>
-				</div>
-				<div ng-if="result.total > 0" ng-repeat="item in result.documents track by item.id" class="search-result">
-					<div class="pub-name">
-						 <a href="{{item.link}}">{{item.title}}</a>
-					</div>
-					<div class="pub-id">
-						Publication ID: {{item.id}}
-					</div>
-					<div class="pub">
-						Publication: {{item.publication}}
-					</div>
-					<div class="pub-date">
-						Publication Date: {{item.pubdate}}
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="trip"></div>
+			<div class="trip"></div>
 		  
 		<!-- /.row -->
-
+		</div>
+		<!-- contents for searched -->
 		<hr>
 
 		<!-- Footer -->
@@ -129,7 +184,7 @@
 				</div>
 			</div>
 		</footer>
-
+	</div>
 	
 	<!-- /.container -->
 
