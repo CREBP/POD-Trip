@@ -1,4 +1,9 @@
 <?php
+/**
+* This script acts as a simple backend proxy for the Trip Database REST API
+* It is used to bypass the CORS restrictions for the Angular frontend used by the search engine interface
+*/
+
 if (!isset($_GET['criteria'])) die('No criteria specified');
 
 $curl = curl_init();
