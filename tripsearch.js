@@ -18,16 +18,20 @@ app.controller('searchController', function($scope, $http, $location, $window) {
 	$scope.searched = false; // Whether we have done at least one search
 	$scope.loading = false;
 	$scope.result;
+	$scope.pages = {current: 9, total: null, previous: [], next: []};
 
 	$scope.submit = function() {
 		$scope.loading = true;
 
-		window.location.hash = '?q=' + $scope.query;
+		window.location.hash = '?q=' + $scope.query + '&page=' + $scope.pages.current;
 
 		$http({
 			method: 'GET',
 			url: '/proxytrip.php', // Route via proxy to work around CORS limits from Trip
-			params: {criteria: $scope.query + ($scope.limitOverdiag ? ' tag:OV' : '')},
+			params: {
+				page: $scope.pages.current,
+				criteria: $scope.query + ($scope.limitOverdiag ? ' tag:OV' : ''),
+			},
 		})
 			.then(function(res) {
 				$scope.result = res.data;
@@ -38,6 +42,20 @@ app.controller('searchController', function($scope, $http, $location, $window) {
 						return r;
 					// }}}
 				})
+				// Pagination {{{
+				$scope.pages.total = Math.ceil($scope.result.total / $scope.result.count);
+				$scope.pages.previous = [];
+				for (var p = $scope.pages.current - 1; p > 0 && p > $scope.pages.current - 5; p--) {
+					$scope.pages.previous.push(p);
+				}
+				$scope.pages.previous.reverse();
+
+				$scope.pages.next = [];
+				for (var p = $scope.pages.current + 1; p < $scope.pages.current + 5; p++) {
+					if (p > $scope.pages.total) break;
+					$scope.pages.next.push(p);
+				}
+				// }}}
 				// }}}
 			})
 			.finally(function() {
@@ -46,8 +64,9 @@ app.controller('searchController', function($scope, $http, $location, $window) {
 			});
 	};
 
-	$scope.debugLoading = function() {
-		$scope.loading = !$scope.loading;
+	$scope.setPage = function(pageNo) {
+		$scope.pages.current = pageNo;
+		$scope.submit();
 	};
 
 	// Load initial state from URL
@@ -56,6 +75,7 @@ app.controller('searchController', function($scope, $http, $location, $window) {
 		$scope.submit();
 	} else if ($location.search().q) { // Import from location.hash (as GET style query)
 		$scope.query = $location.search().q;
+		$scope.pages.current = $location.search().page ? parseInt($location.search().page) : 1;
 		$scope.submit();
 	}
 });

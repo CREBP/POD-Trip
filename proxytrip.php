@@ -6,8 +6,12 @@
 
 if (!isset($_GET['criteria'])) die('No criteria specified');
 
+$url = "https://www.tripdatabase.com/search/json?criteria=" . urlencode($_GET['criteria']);
+
+if (isset($_GET['page'])) $url .= '&skip=' . (($_GET['page']-1) * 30);
+
 $curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, "https://www.tripdatabase.com/search/json?criteria=" . urlencode($_GET['criteria']));
+curl_setopt($curl, CURLOPT_URL, $url);
 curl_setopt($curl, CURLOPT_HEADER, 0);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER , 1);
 

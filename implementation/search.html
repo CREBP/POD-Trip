@@ -32,7 +32,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
 <script src="../tripsearch.js"></script>
 
-
+<style>
+a { cursor: pointer };
+</style>
 <body ng-app="app" ng-controller="searchController">
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -167,7 +169,26 @@
 		</div>
 		<!-- Results -->
 		<div class="trip"></div>
-		  
+
+		<!-- Pagination -->
+		<nav ng-show="!loading && searched" class="text-center">
+			<ul class="pagination pagination-lg">
+				<li ng-class="{disabled: pages.current==1}">
+					<a ng-click="setPage(pages.current-1)" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li ng-repeat="pageNo in pages.previous"><a ng-click="setPage(pageNo)">{{pageNo | number}}</a></li>
+				<li class="active"><a ng-click="setPage(pages.current)">{{pages.current | number}}</a></li>
+				<li ng-repeat="pageNo in pages.next"><a ng-click="setPage(pageNo)">{{pageNo | number}}</a></li>
+				<li ng-class="{disabled: pages.current>=pages.total}">
+					<a ng-click="setPage(pages.current+1)" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
 		<hr>
 
 		<!-- Footer -->
