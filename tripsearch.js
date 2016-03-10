@@ -14,6 +14,7 @@ app.config(function($httpProvider) {
 
 app.controller('searchController', function($scope, $http, $location, $window) {
 	$scope.query = '';
+	$scope.limitOverdiag = true; // Limit results to overdiagnosis only
 	$scope.searched = false; // Whether we have done at least one search
 	$scope.loading = false;
 	$scope.result;
@@ -26,7 +27,7 @@ app.controller('searchController', function($scope, $http, $location, $window) {
 		$http({
 			method: 'GET',
 			url: '/proxytrip.php', // Route via proxy to work around CORS limits from Trip
-			params: {criteria: $scope.query},
+			params: {criteria: $scope.query + ($scope.limitOverdiag ? ' tag:OV' : '')},
 		})
 			.then(function(res) {
 				$scope.result = res.data;
