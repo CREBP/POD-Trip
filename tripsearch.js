@@ -12,7 +12,7 @@ app.config(function($httpProvider) {
 	$httpProvider.useApplyAsync(true);
 });
 
-app.controller('searchController', function($scope, $http, $window) {
+app.controller('searchController', function($scope, $http, $location, $window) {
 	$scope.query = '';
 	$scope.searched = false; // Whether we have done at least one search
 	$scope.loading = false;
@@ -20,6 +20,8 @@ app.controller('searchController', function($scope, $http, $window) {
 
 	$scope.submit = function() {
 		$scope.loading = true;
+
+		window.location.hash = '?q=' + $scope.query;
 
 		$http({
 			method: 'GET',
@@ -48,8 +50,11 @@ app.controller('searchController', function($scope, $http, $window) {
 	};
 
 	// Load initial state from URL
-	if (/^\?q=/.test($window.location.search)) {
+	if (/^\?q=/.test($window.location.search)) { // Import from GET
 		$scope.query = decodeURIComponent($window.location.search.substr(3));
+		$scope.submit();
+	} else if ($location.search().q) { // Import from location.hash (as GET style query)
+		$scope.query = $location.search().q;
 		$scope.submit();
 	}
 });
