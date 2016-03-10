@@ -24,16 +24,13 @@ app.controller('searchController', function($scope, $http, $window) {
 		$http({
 			method: 'GET',
 
-			// This URL is fine if you have direct access to the TripDatabase server (i.e. running from local host)
-			url: 'https://www.tripdatabase.com/search/json',
-
-			// Otherwise you will need to proxy via internal PHP
-			// url: '/proxytrip.php',
+			url: '/proxytrip.php',
 
 			params: {criteria: $scope.query},
 		})
 			.then(function(res) {
 				$scope.result = res.data;
+				console.log('result:', $scope.result);
 			})
 			.finally(function() {
 				$scope.searched = true;

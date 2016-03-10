@@ -66,7 +66,7 @@
 			                	
 				                    <div class="control-group form-group">
 				                        <div class="controls">
-				                            <input type="text" class="form-control" id="search" placeholder="Enter search term" required="" data-validation-required-message="Please enter a search term.">
+				                            <input ng-model="query" type="text" class="form-control" id="search" placeholder="Enter search term" required="" data-validation-required-message="Please enter a search term.">
 											<p class="help-block"> </p>
 			                        	</div>
 			                    	</div>
@@ -92,7 +92,7 @@
 		        <div class="col-md-4">
 		        </div>
 	            <div class="col-md-4">
-	            	<div class="trippic"><a href="https://www.tripdatabase.com/" target="new"> <img src="./Preventing Overdiagnosis Search_files/trip_logo.png"></a></div>
+	            	<div class="trippic"><a href="https://www.tripdatabase.com/" target="new"> <img style="margin-left: 25%;" src="./search_files/trip_sm.png"></a></div>
 	            	<div class="triptext" <p="">Search supported by Trip, a tool for you to fine and use high-quality clinical research evidence.<p></p>  </div>
 	            </div>
 	            <div class="col-md-4">
@@ -129,49 +129,44 @@
 			</form>
 			<!-- /.row -->
 
-			<!-- DEBUG BUTTONS - REMOVE OR COMMENT THIS OUT -->
-			<div class="well">
-				<a ng-click="debugLoading()" ng-class="loading && 'active'" class="btn btn-info">Simulate loading</a>
-			</div>
-
-			<!-- Content Row -->
-			
 			<div class="searchline"></div>
+		</div>
+		<!-- contents for searched -->
 
-			<div ng-show="loading" class="text-center" style="padding: 20px 20px 0 20px">
-				<h4>Loading search results...</h4>
-			</div>
+		<!-- Content Row -->
+		<div ng-show="loading" class="text-center" style="padding: 20px 20px 0 20px">
+			<h4>Loading search results...</h4>
+		</div>
 		
-			<div ng-show="!loading && searched" class="row">
-				<div class="col-lg-12">
-			
-				<div class="result-area">
-					<div class="results-header">
-						<span class="glyphicon glyphicon-search"></span>
-							{{result.total | number}} search results for "<em>{{query}}</em>"
-						</div>
+		<!-- Results -->
+		<div ng-show="!loading && searched" class="row">
+			<div class="col-lg-12">
+		
+			<div class="result-area">
+				<div class="results-header">
+					<span class="glyphicon glyphicon-search"></span>
+						{{result.total | number}} search results for "<em>{{query}}</em>"
 					</div>
-					<div ng-if="result.total > 0" ng-repeat="item in result.documents track by item.id" class="search-result">
-						<div class="pub-name">
-							 <a href="{{item.link}}">{{item.title}}</a>
-						</div>
-						<div class="pub-id">
-							Publication ID: {{item.id}}
-						</div>
-						<div class="pub">
-							Publication: {{item.publication}}
-						</div>
-						<div class="pub-date">
-							Publication Date: {{item.pubdate}}
-						</div>
+				</div>
+				<div ng-if="result.total > 0" ng-repeat="item in result.documents track by item.id" class="search-result">
+					<div class="pub-name">
+						 <a href="{{item.link}}">{{item.title}}</a>
+					</div>
+					<div class="pub-id">
+						Publication ID: {{item.id}}
+					</div>
+					<div class="pub">
+						Publication: {{item.publication}}
+					</div>
+					<div class="pub-date">
+						Publication Date: {{item.pubdate}}
 					</div>
 				</div>
 			</div>
-			<div class="trip"></div>
-		  
-		<!-- /.row -->
 		</div>
-		<!-- contents for searched -->
+		<!-- Results -->
+		<div class="trip"></div>
+		  
 		<hr>
 
 		<!-- Footer -->
