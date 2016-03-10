@@ -23,14 +23,19 @@ app.controller('searchController', function($scope, $http, $window) {
 
 		$http({
 			method: 'GET',
-
-			url: '/proxytrip.php',
-
+			url: '/proxytrip.php', // Route via proxy to work around CORS limits from Trip
 			params: {criteria: $scope.query},
 		})
 			.then(function(res) {
 				$scope.result = res.data;
-				console.log('result:', $scope.result);
+				// Decorators {{{
+				$scope.result.documents = $scope.result.documents.map(function(r) {
+					// Prettify dates {{{
+						r.pubdate = moment(r.pubdate).format('dddd MMMM do YYYY');
+						return r;
+					// }}}
+				})
+				// }}}
 			})
 			.finally(function() {
 				$scope.searched = true;
